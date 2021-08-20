@@ -6,7 +6,7 @@ module.exports = router;
 
 router.get("/seed", async (req, res) => {
   const cs = new pgp.helpers.ColumnSet(
-    ["name", "email", "password", "isadmin"],
+    ["name", "email", "password", "isadmin", "create_dt"],
     {
       table: "users",
     }

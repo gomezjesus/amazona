@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-promise-router": "^4.1.0",
+    "moments": "0.0.2",
     "nodemon": "^2.0.12",
     "pg": "^8.7.1",
     "pg-promise": "^10.11.0"
