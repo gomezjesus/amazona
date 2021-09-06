@@ -5,6 +5,7 @@ const router = new Router();
 const expressAsyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const { generateToken } = require("../utils");
+const moment = require("moment");
 module.exports = router;
 
 router.get("/seed", async (req, res) => {
@@ -41,5 +42,36 @@ router.post(
       }
     }
     res.status(401).send({ message: "Invalid email or password" });
+  })
+);
+
+router.post(
+  "/register",
+  expressAsyncHandler(async (req, res) => {
+    const cs = new pgp.helpers.ColumnSet(
+      ["name", "email", "password", "create_dt"],
+      {
+        table: "users",
+      }
+    );
+    let user = {
+      name: req.body.name,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8),
+      create_dt: moment().toDate(),
+    };
+
+    const query = pgp.helpers.insert(user, cs);
+
+    await db.none(query);
+    res
+      .send({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+        create_dt: moment().toDate(),
+        token: generateToken(user),
+      })
+      .status(200);
   })
 );
