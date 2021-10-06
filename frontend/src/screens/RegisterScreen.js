@@ -38,7 +38,6 @@ export default function RegisterScreen(props) {
         <div>
           <h1>Create Account</h1>
         </div>
-        {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
           <label htmlFor="name">Name</label>
